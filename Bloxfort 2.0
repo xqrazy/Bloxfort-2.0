@@ -1,0 +1,266 @@
+local Yourguiname = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local TextLabel = Instance.new("TextLabel")
+local Background = Instance.new("Frame")
+
+Yourguiname.Name = "Bloxfort Menu"
+Yourguiname.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+Yourguiname.ResetOnSpawn = false
+
+MainFrame.Parent = Yourguiname
+MainFrame.BackgroundTransparency = 1
+MainFrame.Size = UDim2.new(0, 450, 0, 350)
+MainFrame.Position = UDim2.new(0.5, -225, 0.5, -175)
+
+
+local dragging, dragInput, dragStart, startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    MainFrame.Position = UDim2.new(
+        startPos.X.Scale, 
+        startPos.X.Offset + delta.X, 
+        startPos.Y.Scale, 
+        startPos.Y.Offset + delta.Y
+    )
+end
+
+MainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+MainFrame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+game:GetService("UserInputService").InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        update(input)
+    end
+end)
+
+TextLabel.Parent = MainFrame
+TextLabel.BackgroundColor3 = Color3.new(0, 0, 0)
+TextLabel.BackgroundTransparency = 0.3
+TextLabel.Size = UDim2.new(1, 0, 0, 30)
+TextLabel.Font = Enum.Font.ArialBold
+TextLabel.Text = "  BLOXFORT MENU"
+TextLabel.TextColor3 = Color3.new(1, 1, 1)
+TextLabel.TextSize = 18
+TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+Background.Parent = MainFrame
+Background.BackgroundColor3 = Color3.new(0.1, 0.1, 0.1)
+Background.BackgroundTransparency = 0.2
+Background.Position = UDim2.new(0, 0, 0, 30)
+Background.Size = UDim2.new(1, 0, 1, -30)
+
+local Signature = Instance.new("TextLabel")
+Signature.Name = "Signature"
+Signature.Parent = Background
+Signature.Text = "Made by xqrazy"
+Signature.TextColor3 = Color3.new(1, 1, 1)
+Signature.TextTransparency = 0.3
+Signature.TextSize = 19
+Signature.Font = Enum.Font.ArialBold
+Signature.BackgroundTransparency = 1
+Signature.Size = UDim2.new(0, 120, 0, 25)
+Signature.Position = UDim2.new(1, -125, 1, -30)
+Signature.TextXAlignment = Enum.TextXAlignment.Right
+
+local buttons = {
+    {
+        name = "Dusme Hasari", 
+        color = Color3.fromRGB(60, 60, 60), 
+        xPos = 0.05, 
+        yPos = 0.05,
+        script = function()
+            local part = Instance.new("Part", workspace)
+            part.Anchored = true
+            part.Size = Vector3.new(7, 0.8, 9)
+            local hrp = game.Players.LocalPlayer.Character.HumanoidRootPart
+            repeat task.wait()
+                part.CFrame = CFrame.new(hrp.Position.X, hrp.Position.Y - 3.25, hrp.Position.Z)
+            until not part or game.Players.LocalPlayer.Character.Humanoid.Health <= 0
+            part:Destroy()
+        end
+    },
+    {
+        name = "Lag Engel", 
+        color = Color3.fromRGB(70, 70, 70), 
+        xPos = 0.05, 
+        yPos = 0.22,
+        script = function()
+            loadstring(game:HttpGet('https://pastebin.com/raw/A5qCVHJt'))()
+        end
+    },
+    {
+        name = "Kafa Buyutme", 
+        color = Color3.fromRGB(80, 80, 80), 
+        xPos = 0.05, 
+        yPos = 0.39,
+        script = function()
+            loadstring(game:HttpGet("https://pastebin.com/raw/EWnEDbeR", true))()
+        end
+    },
+    {
+        name = "Yer Gorme", 
+        color = Color3.fromRGB(90, 90, 90), 
+        xPos = 0.05, 
+        yPos = 0.56,
+        script = function()
+            loadstring(game:HttpGet('https://pastebin.com/raw/7K1Jhmck'))()
+        end
+    },
+    {
+        name = "Sinirsiz Zipla", 
+        color = Color3.fromRGB(60, 60, 60), 
+        xPos = 0.55, 
+        yPos = 0.05,
+        script = function()
+            local InfiniteJumpEnabled = true
+            game:GetService("UserInputService").JumpRequest:Connect(function()
+                if InfiniteJumpEnabled then
+                    game.Players.LocalPlayer.Character:FindFirstChildOfClass('Humanoid'):ChangeState("Jumping")
+                end
+            end)
+        end
+    },
+    {
+        name = "Ucma", 
+        color = Color3.fromRGB(70, 70, 70), 
+        xPos = 0.55, 
+        yPos = 0.22,
+        script = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/xqrazy/U-ma/refs/heads/main/Uçma"))()
+        end
+    },
+    {
+        name = "Yuksek Zipla", 
+        color = Color3.fromRGB(80, 80, 80), 
+        xPos = 0.55, 
+        yPos = 0.39,
+        script = function()
+            loadstring(game:HttpGet("https://pastebin.com/raw/JfCDcYFs", true))()
+        end
+    },
+    {
+        name = "Hiz", 
+        color = Color3.fromRGB(90, 90, 90), 
+        xPos = 0.55, 
+        yPos = 0.56,
+        script = function()
+            loadstring(game:HttpGet("https://pastebin.com/raw/xxsjQVVy", true))()
+        end
+    }
+}
+
+for _, btn in ipairs(buttons) do
+    local button = Instance.new("TextButton")
+    button.Name = btn.name
+    button.Parent = Background
+    button.Size = UDim2.new(0.4, 0, 0, 35)
+    button.Position = UDim2.new(btn.xPos, 0, btn.yPos, 0)
+    button.BackgroundColor3 = btn.color
+    button.BackgroundTransparency = 0.3
+    button.Font = Enum.Font.ArialBold
+    button.Text = btn.name
+    button.TextColor3 = Color3.new(1, 1, 1)
+    button.TextSize = 14
+    
+    local UICorner = Instance.new("UICorner")
+    UICorner.CornerRadius = UDim.new(0, 6)
+    UICorner.Parent = button
+    
+    button.MouseButton1Click:Connect(function()
+        btn.script()
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = btn.name.." AKTİF",
+            Text = "Özellik etkinleştirildi",
+            Duration = 3
+        })
+    end)
+end
+
+local UIS = game:GetService("UserInputService")
+local lastToggleTime = 0
+
+UIS.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed then
+        if (input.KeyCode == Enum.KeyCode.LeftControl or input.KeyCode == Enum.KeyCode.RightControl) then
+            local now = tick()
+            if now - lastToggleTime > 0.2 then
+                lastToggleTime = now
+                Yourguiname.Enabled = not Yourguiname.Enabled
+                
+                game:GetService("StarterGui"):SetCore("SendNotification", {
+                    Title = "BLOXFORT MENU",
+                    Text = Yourguiname.Enabled and "Menü AÇILDI" or "Menü KAPANDI",
+                    Duration = 15,
+                    Icon = "rbxassetid://4457731821"
+                })
+            end
+        end
+    end
+end)
+
+task.wait(1)
+
+local LinkButton = Instance.new("TextButton")
+LinkButton.Name = "DiscordLink"
+LinkButton.Parent = Background
+LinkButton.Size = UDim2.new(0.9, 0, 0, 30)
+LinkButton.Position = UDim2.new(0.05, 0, 0.75, 0)
+LinkButton.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+LinkButton.BackgroundTransparency = 0.5
+LinkButton.Font = Enum.Font.Arial
+LinkButton.Text = "Discord Linkimiz"
+LinkButton.TextColor3 = Color3.new(1, 1, 1)
+LinkButton.TextSize = 12
+LinkButton.TextXAlignment = Enum.TextXAlignment.Left
+LinkButton.TextWrapped = true
+
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 4)
+UICorner.Parent = LinkButton
+
+local function copyToClipboard(text)
+    local Clipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
+    if Clipboard then
+        Clipboard(text)
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Başarılı!",
+            Text = "Link panoya kopyalandı",
+            Duration = 2
+        })
+    else
+        game:GetService("StarterGui"):SetCore("SendNotification", {
+            Title = "Hata!",
+            Text = "Kopyalama desteklenmiyor",
+            Duration = 2
+        })
+    end
+end
+
+LinkButton.MouseButton1Click:Connect(function()
+    copyToClipboard("https://discord.gg/Wd4MvRUEAs")
+end)
+
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "BLOXFORT MENU YÜKLENDİ",
+    Text = "CTRL tuşuyla menüyü gizle",
+    Duration = 15,
+    Icon = "rbxassetid://4457731821"
+})
